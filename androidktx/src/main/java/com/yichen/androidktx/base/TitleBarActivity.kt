@@ -15,6 +15,7 @@ abstract class TitleBarActivity : AdaptActivity<KtxActivityTitlebarBinding>(){
         binding.titleBar.leftImageView().click { finish() }
     }
 
+
     override val mClass: Class<*>
         get() = Class.forName("com.yichen.androidktx.base.TitleBarActivity")
 
