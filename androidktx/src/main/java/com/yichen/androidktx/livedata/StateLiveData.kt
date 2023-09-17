@@ -13,13 +13,13 @@ import kotlinx.coroutines.launch
  * Description: 携带状态的LiveData
  * Create by yichen, at 2019/3/6
  */
-class StateLiveData<T>(defValue: T? = null) : _root_ide_package_.com.yichen.androidktx.livedata.NoStickyLiveData<T>() {
+class StateLiveData<T>(defValue: T? = null) : NoStickyLiveData<T>() {
 
     enum class State {
         Idle, Loading, Success, Error, Empty
     }
 
-    val state = _root_ide_package_.com.yichen.androidktx.livedata.NoStickyLiveData<State>()
+    val state = NoStickyLiveData<State>()
     var errMsg: String? = null
     var errCode: String? = null
 

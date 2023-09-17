@@ -25,7 +25,7 @@ fun Context.dimenPx(id: Int) = resources.getDimensionPixelSize(id)
 
 fun View.color(id: Int) = context.color(id)
 
-fun View.string(id: Int, vararg arg: Any? = arrayOf()) = _root_ide_package_.com.yichen.androidktx.AndroidKTX.context.string(id = id, arg = arg)
+fun View.string(id: Int, vararg arg: Any? = arrayOf()) = AndroidKTX.context.string(id = id, arg = arg)
 
 fun View.stringArray(id: Int) = context.stringArray(id)
 
@@ -34,15 +34,15 @@ fun View.drawable(id: Int) = context.drawable(id)
 fun View.dimenPx(id: Int) = context.dimenPx(id)
 
 
-fun Fragment.color(id: Int) = _root_ide_package_.com.yichen.androidktx.AndroidKTX.context.color(id)
+fun Fragment.color(id: Int) = AndroidKTX.context.color(id)
 
-fun Fragment.string(id: Int, vararg arg: Any? = arrayOf()) = _root_ide_package_.com.yichen.androidktx.AndroidKTX.context.string(id = id, arg = arg)
+fun Fragment.string(id: Int, vararg arg: Any? = arrayOf()) = AndroidKTX.context.string(id = id, arg = arg)
 
-fun Fragment.stringArray(id: Int) = _root_ide_package_.com.yichen.androidktx.AndroidKTX.context.stringArray(id)
+fun Fragment.stringArray(id: Int) = AndroidKTX.context.stringArray(id)
 
-fun Fragment.drawable(id: Int) = _root_ide_package_.com.yichen.androidktx.AndroidKTX.context.drawable(id)
+fun Fragment.drawable(id: Int) = AndroidKTX.context.drawable(id)
 
-fun Fragment.dimenPx(id: Int) = _root_ide_package_.com.yichen.androidktx.AndroidKTX.context.dimenPx(id)
+fun Fragment.dimenPx(id: Int) = AndroidKTX.context.dimenPx(id)
 
 
 fun RecyclerView.ViewHolder.color(id: Int) = itemView.color(id)

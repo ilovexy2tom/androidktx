@@ -171,7 +171,7 @@ fun ImageView.dynamicLoad(
 
 
 fun String.preloadImage(onSuccess: ((Drawable?) -> Unit)? = null, onFail: (() -> Unit)? = null) {
-    Glide.with(_root_ide_package_.com.yichen.androidktx.AndroidKTX.context)
+    Glide.with(AndroidKTX.context)
         .load(this)
         .diskCacheStrategy(DiskCacheStrategy.ALL)
         .listener(object : RequestListener<Drawable> {

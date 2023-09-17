@@ -105,7 +105,7 @@ fun <T: ViewModel> Fragment.getVM(clazz: Class<T>) = ViewModelProvider(this).get
  * ```
  */
 fun <T: ViewModel> Fragment.getSavedStateVM(clazz: Class<T>) = ViewModelProvider(this, SavedStateViewModelFactory(
-    _root_ide_package_.com.yichen.androidktx.AndroidKTX.context as Application, this)
+    AndroidKTX.context as Application, this)
 ).get(clazz)
 
 

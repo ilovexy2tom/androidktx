@@ -4,11 +4,11 @@ import android.app.Application
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.*
 import com.blankj.utilcode.util.ToastUtils
+import com.lxj.xpopup.core.BasePopupView
 import com.yichen.androidktx.AndroidKTX
 import com.yichen.androidktx.livedata.StateLiveData
-import com.yichen.xpopup.XPopup
-import com.yichen.xpopup.core.BasePopupView
-import com.yichen.xpopup.enums.PopupStatus
+import com.lxj.xpopup.XPopup
+import com.lxj.xpopup.enums.PopupStatus
 
 /**
  * 绑定LiveData的状态，警惕LoadingView过早关闭的时候，state的状态还未执行
@@ -93,5 +93,5 @@ fun <T: ViewModel> BasePopupView.getVM(clazz: Class<T>) = ViewModelProvider(cont
  * ```
  */
 fun <T: ViewModel> BasePopupView.getSavedStateVM(clazz: Class<T>) = ViewModelProvider(context as FragmentActivity, SavedStateViewModelFactory(
-    _root_ide_package_.com.yichen.androidktx.AndroidKTX.context as Application, context as FragmentActivity)
+    AndroidKTX.context as Application, context as FragmentActivity)
 ).get(clazz)

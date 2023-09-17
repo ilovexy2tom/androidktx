@@ -7,8 +7,8 @@ import com.yichen.androidktx.core.click
 import com.yichen.androidktx.core.gone
 import com.yichen.androidktx.databinding.PopupVersionUpdateBinding
 import com.yichen.androidktx.util.CommonUpdateInfo
-import com.yichen.xpopup.XPopup
-import com.yichen.xpopup.core.CenterPopupView
+import com.lxj.xpopup.XPopup
+import com.lxj.xpopup.core.CenterPopupView
 
 
 class VersionUpdatePopup (context: Context, var updateInfo: CommonUpdateInfo, var onOkClick: ((url:String)->Unit)): CenterPopupView(context){

@@ -24,7 +24,7 @@ class FragmentWrapperActivity : TitleBarActivity() {
                 ToastUtils.showShort("fragmentName can not be null or empty")
                 return
             }
-            val intent = Intent(_root_ide_package_.com.yichen.androidktx.AndroidKTX.context, FragmentWrapperActivity::class.java).apply {
+            val intent = Intent(AndroidKTX.context, FragmentWrapperActivity::class.java).apply {
                 if(!title.isNullOrEmpty()) putExtra("title", title)
                 if(bundle!=null) putExtra("bundle", bundle)
                 putExtra("fragment", fragmentName)

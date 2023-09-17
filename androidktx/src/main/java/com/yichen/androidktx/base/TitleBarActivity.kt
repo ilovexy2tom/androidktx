@@ -15,6 +15,9 @@ abstract class TitleBarActivity : AdaptActivity<KtxActivityTitlebarBinding>(){
         binding.titleBar.leftImageView().click { finish() }
     }
 
+    override val mClass: Class<*>
+        get() = Class.forName("com.yichen.androidktx.base.TitleBarActivity")
+
     fun setStatusBarColor(color: Int) = binding.fakeTitleBar.setBackgroundColor(color)
 
     fun titleBar() = binding.titleBar

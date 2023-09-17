@@ -28,15 +28,15 @@ object OkExt {
             .addNetworkInterceptor(HttpLogInterceptor())
 //            .cookieJar(PersistentCookieStore())
             .sslSocketFactory(
-                _root_ide_package_.com.yichen.androidktx.util.HttpsUtils.getSslSocketFactory().sSLSocketFactory,
-                    _root_ide_package_.com.yichen.androidktx.util.HttpsUtils.getSslSocketFactory().trustManager)
+               HttpsUtils.getSslSocketFactory().sSLSocketFactory,
+                    HttpsUtils.getSslSocketFactory().trustManager)
             .build()
     var dateFormat: String = "yyyy-MM-dd HH:mm:ss"
     var lenientJson: Boolean = false
     var globalFailHandler: ((e: Exception?)->Unit)? = null
 
     init {
-        okHttpClient = _root_ide_package_.com.yichen.androidktx.okhttp.progressmanager.ProgressManager.getInstance().with(okHttpClient.newBuilder()).build()
+        okHttpClient = ProgressManager.getInstance().with(okHttpClient.newBuilder()).build()
     }
 
     /**

@@ -8,7 +8,7 @@ import com.yichen.androidktx.core.sp
 import com.yichen.androidktx.core.toJson
 import com.yichen.androidktx.okhttp.*
 import com.yichen.androidktx.popup.VersionUpdatePopup
-import com.yichen.xpopup.XPopup
+import com.lxj.xpopup.XPopup
 import java.io.File
 import java.io.IOException
 

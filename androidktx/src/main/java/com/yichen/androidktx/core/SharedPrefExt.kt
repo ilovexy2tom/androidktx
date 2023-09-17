@@ -9,7 +9,7 @@ import com.yichen.androidktx.AndroidKTX
  * Create by dance, at 2018/12/5
  */
 
-fun Any.sp(name: String = _root_ide_package_.com.yichen.androidktx.AndroidKTX.sharedPrefName) = _root_ide_package_.com.yichen.androidktx.AndroidKTX.context.getSharedPreferences(name, Context.MODE_PRIVATE)
+fun Any.sp(name: String = AndroidKTX.sharedPrefName) = AndroidKTX.context.getSharedPreferences(name, Context.MODE_PRIVATE)
 
 /**
  * 批处理

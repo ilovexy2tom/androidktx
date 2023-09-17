@@ -167,10 +167,10 @@ data class RequestWrapper(
         return "${url()}$queryParams"
     }
 
-    fun uploadListener(onProgress: (progressInfo: _root_ide_package_.com.yichen.androidktx.okhttp.progressmanager.body.ProgressInfo?)->Unit, onError: ((id: Long, e: Exception?)->Unit)? = null): RequestWrapper{
-        _root_ide_package_.com.yichen.androidktx.okhttp.progressmanager.ProgressManager.getInstance().addRequestListener(url, object :
-            _root_ide_package_.com.yichen.androidktx.okhttp.progressmanager.ProgressListener {
-            override fun onProgress(progressInfo: _root_ide_package_.com.yichen.androidktx.okhttp.progressmanager.body.ProgressInfo?) {
+    fun uploadListener(onProgress: (progressInfo: ProgressInfo?)->Unit, onError: ((id: Long, e: Exception?)->Unit)? = null): RequestWrapper{
+        ProgressManager.getInstance().addRequestListener(url, object :
+            ProgressListener {
+            override fun onProgress(progressInfo: ProgressInfo?) {
                 onProgress(progressInfo)
             }
             override fun onError(id: Long, e: Exception?) {
@@ -180,10 +180,9 @@ data class RequestWrapper(
         return this
     }
 
-    fun downloadListener(onProgress: (progressInfo: _root_ide_package_.com.yichen.androidktx.okhttp.progressmanager.body.ProgressInfo?)->Unit, onError: ((id: Long, e: Exception?)->Unit)? = null): RequestWrapper{
-        _root_ide_package_.com.yichen.androidktx.okhttp.progressmanager.ProgressManager.getInstance().addResponseListener(url, object :
-            _root_ide_package_.com.yichen.androidktx.okhttp.progressmanager.ProgressListener {
-            override fun onProgress(progressInfo: _root_ide_package_.com.yichen.androidktx.okhttp.progressmanager.body.ProgressInfo?) {
+    fun downloadListener(onProgress: (progressInfo: ProgressInfo?)->Unit, onError: ((id: Long, e: Exception?)->Unit)? = null): RequestWrapper{
+        ProgressManager.getInstance().addResponseListener(url, object : ProgressListener {
+            override fun onProgress(progressInfo: ProgressInfo?) {
                 onProgress(progressInfo)
             }
             override fun onError(id: Long, e: Exception?) {

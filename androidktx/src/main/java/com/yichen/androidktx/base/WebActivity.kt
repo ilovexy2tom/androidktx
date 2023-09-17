@@ -58,14 +58,14 @@ open class WebActivity : TitleBarActivity() {
             rightIconClickAction: (() -> Unit)? = null
         ) {
             onRightClickAction = rightIconClickAction
-            if (_root_ide_package_.com.yichen.androidktx.AndroidKTX.isDebug) {
+            if (AndroidKTX.isDebug) {
                 if (!url.isNullOrEmpty()) {
                     LogUtils.d("url: $url")
                 } else {
                     LogUtils.d("content: $content")
                 }
             }
-            val intent = Intent(_root_ide_package_.com.yichen.androidktx.AndroidKTX.context, WebActivity::class.java)
+            val intent = Intent(AndroidKTX.context, WebActivity::class.java)
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             intent.putExtra("hideTitleBar", hideTitleBar)
             intent.putExtra("keepMarginTop", keepMarginTop)
@@ -87,7 +87,7 @@ open class WebActivity : TitleBarActivity() {
             intent.putExtra("showProgress", showProgress)
             if (designWidth != null) intent.putExtra("designWidth", designWidth)
             if (designHeight != null) intent.putExtra("designHeight", designHeight)
-            _root_ide_package_.com.yichen.androidktx.AndroidKTX.context.startActivity(intent)
+            AndroidKTX.context.startActivity(intent)
         }
     }
 

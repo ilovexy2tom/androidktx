@@ -10,7 +10,6 @@ import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.SavedStateViewModelFactory
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.yichen.androidktx.AndroidKTX
 import com.yichen.androidktx.livedata.LifecycleHandler
 
 /**
@@ -92,7 +91,7 @@ fun <T: ViewModel> FragmentActivity.getVM(clazz: Class<T>) = ViewModelProvider(t
  * ```
  */
 fun <T: ViewModel> FragmentActivity.getSavedStateVM(clazz: Class<T>) = ViewModelProvider(this, SavedStateViewModelFactory(
-    _root_ide_package_.com.yichen.androidktx.AndroidKTX.context as Application, this)
+    AndroidKTX.context as Application, this)
 ).get(clazz)
 
 
@@ -100,7 +99,7 @@ fun <T: ViewModel> FragmentActivity.getSavedStateVM(clazz: Class<T>) = ViewModel
  * 将Activity移到前台，需将launchMode设置为SingleTop，否则会创建新实例
  */
 fun Activity.moveTaskToFront(){
-    val intent = Intent(_root_ide_package_.com.yichen.androidktx.AndroidKTX.context, this.javaClass)
+    val intent = Intent(AndroidKTX.context, this.javaClass)
     intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_REORDER_TO_FRONT or Intent.FLAG_ACTIVITY_SINGLE_TOP
-    _root_ide_package_.com.yichen.androidktx.AndroidKTX.context.startActivity(intent)
+    AndroidKTX.context.startActivity(intent)
 }

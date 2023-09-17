@@ -7,11 +7,14 @@ import android.view.View
 import androidx.recyclerview.widget.*
 import com.blankj.utilcode.util.AdaptScreenUtils
 import com.google.android.flexbox.FlexboxLayoutManager
+import com.lxj.easyadapter.EasyAdapter
+import com.lxj.easyadapter.ItemDelegate
+import com.lxj.easyadapter.MultiItemTypeAdapter
+import com.lxj.easyadapter.ViewHolder
 import com.yichen.androidktx.util.RecyclerViewDivider
 import com.yichen.androidktx.util.SafeGridLayoutManager
 import com.yichen.androidktx.util.SafeLinearLayoutManager
 import com.yichen.androidktx.util.SafeStaggeredGridLayoutManager
-import com.yichen.easyadapter.*
 import java.util.*
 import kotlin.collections.ArrayList
 

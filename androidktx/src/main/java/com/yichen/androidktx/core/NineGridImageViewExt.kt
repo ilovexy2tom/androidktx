@@ -5,8 +5,8 @@ import android.graphics.Color
 import android.widget.ImageView
 import com.jaeger.ninegridimageview.NineGridImageView
 import com.jaeger.ninegridimageview.NineGridImageViewAdapter
-import com.yichen.xpopup.XPopup
-import com.yichen.xpopup.util.SmartGlideImageLoader
+import com.lxj.xpopup.XPopup
+import com.lxj.xpopup.util.SmartGlideImageLoader
 
 /**
  * 绑定数据

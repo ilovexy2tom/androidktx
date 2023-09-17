@@ -9,8 +9,8 @@ import com.blankj.utilcode.util.ToastUtils
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.yichen.androidktx.R
 import com.yichen.androidktx.core.*
-import com.yichen.xpopup.XPopup
-import com.yichen.xpopup.util.SmartGlideImageLoader
+import com.lxj.xpopup.XPopup
+import com.lxj.xpopup.util.SmartGlideImageLoader
 
 /**
  * 图片上传UI组件
@@ -73,14 +73,14 @@ class ImageUploader @JvmOverloads constructor(
             }
             if (t == add_button) {
                 holder.getView<ImageView>(R.id.close).gone()
-                holder.getView<_root_ide_package_.com.yichen.androidktx.widget.RoundImageView>(R.id.image).apply {
+                holder.getView<RoundImageView>(R.id.image).apply {
                     setImageDrawable(addImage)
                     setCornerRadius(0)
                     click { addButtonClickAction?.invoke() }
                 }
             } else {
                 holder.getView<ImageView>(R.id.close).visible()
-                holder.getView<_root_ide_package_.com.yichen.androidktx.widget.RoundImageView>(R.id.image).apply {
+                holder.getView<RoundImageView>(R.id.image).apply {
                     load(t)
                     setCornerRadius(imageRadius)
                     click { XPopup.Builder(context).asImageViewer(it as ImageView, t, SmartGlideImageLoader()).show() }
