@@ -63,4 +63,5 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-test-manifest")
 
     api(project(":androidktx"))
+    api(project(":statelayout"))
 }
