@@ -1,12 +1,40 @@
 plugins {
-    id("com.android.library")
-    id("org.jetbrains.kotlin.android")
+    id 'com.android.library'
+    id 'kotlin-android'
+    id 'maven-publish'
 }
 
-task generateSourcesJar(type: Jar){
+task generateSourcesJar(type: Jar) {
     from android.sourceSets.main.java.srcDirs
-    classifier  'sources'
+    classifier 'sources'
 }
+
+//publish github Gradle 7.1以后要放到外面
+afterEvaluate {
+    publishing {
+        def versionName = "1.0.2" // 当前版本依赖库版本号，这个jitpack不会使用到，只是我们开发者自己查看
+        publications {
+            release(MavenPublication) {
+                from components.release         // 表示发布 release（jitpack 都不会使用到）
+                groupId = 'com.yichen.androidktx' // 这个是依赖库的组 id
+                artifactId = 'androidktx'       // 依赖库的名称（jitpack 都不会使用到）
+                version = versionName
+            }
+        }
+
+        repositories {
+            // 下面这部分，不是很清楚加不加，但是最后加上
+            maven {
+                // change URLs to point to your repos, e.g. http://my.org/repo
+                def baseUrl = buildDir.getParent()
+                def releasesRepoUrl = "$baseUrl/repos/releases"
+                def snapshotsRepoUrl = "$baseUrl/repos/snapshots"
+                url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
+            }
+        }
+    }
+}
+
 
 android {
     namespace = "com.yichen.androidktx"
@@ -22,15 +50,15 @@ android {
             abiFilters 'armeabi-v7a'
         }
     }
-
+    buildFeatures { viewBinding true }
     buildTypes {
         release {
             minifyEnabled false
-            release {
-                minifyEnabled false
-                proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            }
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+    lintOptions {
+        abortOnError false
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
@@ -44,35 +72,10 @@ android {
             jniLibs.srcDirs = ['libs']
         }
     }
-
-    //publish github
-    afterEvaluate {
-        publishing {
-            def versionName = "1.0.2" // 当前版本依赖库版本号，这个jitpack不会使用到，只是我们开发者自己查看
-            publications {
-                release(MavenPublication) {
-                    from components.release         // 表示发布 release（jitpack 都不会使用到）
-                    groupId = 'com.yichen.androidktx' // 这个是依赖库的组 id
-                    artifactId = 'androidktx'       // 依赖库的名称（jitpack 都不会使用到）
-                    version = versionName
-                }
-            }
-
-            repositories {
-                // 下面这部分，不是很清楚加不加，但是最后加上
-                maven {
-                    // change URLs to point to your repos, e.g. http://my.org/repo
-                    def baseUrl = buildDir.getParent()
-                    def releasesRepoUrl = "$baseUrl/repos/releases"
-                    def snapshotsRepoUrl = "$baseUrl/repos/snapshots"
-                    url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
-                }
-            }
-        }
+    publishing {//这个不能少
+        singleVariant("release")
     }
-
 }
-
 dependencies {
     api fileTree(include: ['*.jar'], dir: 'libs')
     //android lib
@@ -131,6 +134,7 @@ dependencies {
 //    api 'com.github.Justson.AgentWeb:agentweb-filechooser:v4.1.9-androidx' // (可选)
 //    api 'com.github.Justson:Downloader:v4.1.9-androidx' // (可选)
 
+    api "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.8.21"
 
 
 }
