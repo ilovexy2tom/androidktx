@@ -20,3 +20,16 @@ allprojects {
 
 Step2. Add the dependency
 [![](https://jitpack.io/v/ilovexy2tom/androidktx.svg)](https://jitpack.io/#ilovexy2tom/androidktx)
+
+```
+dependencies {
+    implementation 'com.github.ilovexy2tom:androidktx:最新版本'
+    implementation 'com.github.li-xiaojun.AndroidKTX:circleprogress:最新版本'
+    implementation 'com.github.li-xiaojun.AndroidKTX:videoplayer:最新版本'
+    implementation 'com.github.li-xiaojun.AndroidKTX:audioplayer:最新版本'
+    implementation 'com.github.li-xiaojun.AndroidKTX:matisse:最新版本'
+    implementation 'com.github.li-xiaojun.AndroidKTX:pay:最新版本'
+    implementation 'com.github.li-xiaojun.AndroidKTX:share:最新版本'
+    implementation 'com.github.li-xiaojun.AndroidKTX:audio-recorder:最新版本'
+}
+```
