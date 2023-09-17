@@ -1,9 +1,6 @@
 ## AndroidKTX
 ![](imgs/logo.png)
 
-Some very useful kotlin extensions for android development !
-
-一系列非常有用的Kotlin扩展和组件，专注于通用业务的封装，目标提高Android开发速度！注意这个不是官方的AndroidKTX ！
 
 自用库
 
