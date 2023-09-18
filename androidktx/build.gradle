@@ -38,11 +38,11 @@ afterEvaluate {
 
 android {
     namespace = "com.yichen.androidktx"
-    compileSdk = 33
+    compileSdk = CompileSdkVersion
 
     defaultConfig {
-        minSdk = 24
-        targetSdk = 33
+        minSdk = MinSdkVersion
+        targetSdk = TargetSdkVersion
         versionCode = 1
         versionName = "1.0"
 
@@ -79,25 +79,27 @@ android {
 dependencies {
     api fileTree(include: ['*.jar'], dir: 'libs')
     //android lib
-    api 'androidx.core:core-ktx:1.9.0'
-    api "androidx.appcompat:appcompat:1.6.1"
+    api 'androidx.core:core-ktx:1.7.0'
+    api "androidx.appcompat:appcompat:1.4.1"
     api 'androidx.multidex:multidex:2.0.1'
-    api 'com.google.android.material:material:1.9.0'
-    api 'androidx.constraintlayout:constraintlayout:2.1.4'
+    api 'com.google.android.material:material:1.6.0'
+    api 'androidx.constraintlayout:constraintlayout:2.1.3'
     api 'com.google.android:flexbox:2.0.1'
     api "androidx.viewpager2:viewpager2:1.0.0"
-    api "androidx.recyclerview:recyclerview:1.3.1"
+    api "androidx.recyclerview:recyclerview:1.2.1"
     api 'com.github.li-xiaojun:EasyAdapter:1.2.9'
     //    api 'com.github.li-xiaojun.AndroidKTX:videoplayer:2.8.6'
 
 
     //lifecycle
-    api "androidx.lifecycle:lifecycle-viewmodel-savedstate:2.6.2"
-    api "androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2"
-    api "androidx.lifecycle:lifecycle-runtime-ktx:2.6.2"
+    api "androidx.lifecycle:lifecycle-extensions:2.2.0"
+    api "androidx.lifecycle:lifecycle-viewmodel-savedstate:2.4.1"
+    api "androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1"
+    api "androidx.lifecycle:lifecycle-runtime-ktx:2.4.1"
+
 
     //coroutines
-    api "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4"
+    api "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.0"
 
     //glide
     api "com.github.bumptech.glide:glide:4.12.0"
@@ -105,7 +107,7 @@ dependencies {
 //    api 'com.github.bumptech.glide:annotations:4.12.0'
 
 
-    api 'com.google.code.gson:gson:2.10.1'
+    api 'com.google.code.gson:gson:2.9.0'
     api "com.squareup.okhttp3:okhttp:3.14.9"
 
 
@@ -115,9 +117,9 @@ dependencies {
 
 
     //View
-    api 'io.github.scwang90:refresh-layout-kernel:2.0.6'
-    api 'io.github.scwang90:refresh-header-classics:2.0.6'
-    api 'io.github.scwang90:refresh-footer-classics:2.0.6' //refresh
+    api 'io.github.scwang90:refresh-layout-kernel:2.0.5'
+    api 'io.github.scwang90:refresh-header-classics:2.0.5'
+    api 'io.github.scwang90:refresh-footer-classics:2.0.5' //刷新组建
     api 'com.jaeger.ninegridimageview:library:1.1.1'  //Ninegridimage
 //    api 'com.otaliastudios:cameraview:2.7.2'//camera
 //    api 'com.github.yalantis:ucrop:2.2.8'//crop
@@ -134,7 +136,8 @@ dependencies {
 //    api 'com.github.Justson.AgentWeb:agentweb-filechooser:v4.1.9-androidx' // (可选)
 //    api 'com.github.Justson:Downloader:v4.1.9-androidx' // (可选)
 
-    api "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.8.21"
+    api "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${kotlin_version}"
+    api(platform("org.jetbrains.kotlin:kotlin-bom:${kotlin_version}"))
 
     api project(":statelayout")
 
