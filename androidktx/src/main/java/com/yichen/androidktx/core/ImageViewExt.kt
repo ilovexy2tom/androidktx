@@ -10,6 +10,10 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.load.model.GlideUrl
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.load.resource.bitmap.CircleCrop
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
@@ -17,8 +21,8 @@ import com.bumptech.glide.request.target.SimpleTarget
 import com.bumptech.glide.request.target.Target
 import com.bumptech.glide.request.transition.Transition
 import com.yichen.androidktx.AndroidKTX
+import com.yichen.androidktx.util.GlideBlurTransformation
 import com.yichen.androidktx.util.SuperGlideTransformation
-
 /**
  * Description: ImageView相关
  * Create by yichen, at 2018/12/5
@@ -39,67 +43,61 @@ import com.yichen.androidktx.util.SuperGlideTransformation
  * @param isForceOriginalSize 是否强制使用原图，默认false
  */
 @SuppressLint("CheckResult")
+@JvmOverloads
 fun ImageView.load(
     url: Any?, placeholder: Int = 0, error: Int = 0,
     isCircle: Boolean = false,
-    isCenterCrop: Boolean = true,
-    borderSize: Int = 0,
-    borderColor: Int = 0,
+    isCenterCrop: Boolean = false,
     blurScale: Float = 0f,
     blurRadius: Float = 20f,
     roundRadius: Int = 0,
-    roundArray: FloatArray? = null,
     isCrossFade: Boolean = false,
+    skipMemoryCache: Boolean = false,
     isForceOriginalSize: Boolean = false,
     targetWidth: Int = 0,
     targetHeight: Int = 0,
     onImageLoad: ((resource: Drawable?) -> Unit)? = null,
-    onImageFail: (() -> Unit)? = null
+    onImageFail: (() -> Unit)? = null,
 ) {
+//    if (url is String && !url.startsWith("http") && url.length > 0){
+//        load(placeholder)
+//        return
+//    }
     if (context == null) return
     if (context is Activity && ((context as Activity).isDestroyed || (context as Activity).isFinishing)) return
-//    val transforms = arrayListOf<Transformation<Bitmap>>()
-    var round = roundRadius
-    if (isCenterCrop && scaleType != ImageView.ScaleType.CENTER_CROP) {
-        scaleType = ImageView.ScaleType.CENTER_CROP
-    }
-    if (isCircle && round == 0) {
-        round = (Math.max(measuredWidth, layoutParams.width)) / 2
-    }
-//    if(round==0) round=1
-//    if (isCircle) {
-//        transforms.add(CircleCrop())
-//    } else
-//    if (round > 0) {
-//        if (isCenterCrop || scaleType == ImageView.ScaleType.CENTER_CROP) {
-//            transforms.add(CenterCrop())
-//            transforms.add(RoundedCorners(round))
-//        } else {
-//            transforms.add(RoundedCorners(round))
-//        }
-//    }
-//    transforms.add(
-//
-//    )
-    val options = RequestOptions().placeholder(placeholder).error(if (error == 0) placeholder else error).apply {
-        if (isForceOriginalSize) {
-            override(Target.SIZE_ORIGINAL)
-        }
-        if (targetWidth != 0 && targetHeight != 0) {
-            override(targetWidth, targetHeight)
-        }
-
-
-    }
-    val superTransform = SuperGlideTransformation(
-        isCenterCrop = isCenterCrop || scaleType == ImageView.ScaleType.CENTER_CROP,
-        scale = blurScale, borderSize = borderSize, borderColor = borderColor,
-        blurRadius = blurRadius, roundRadius = round, roundArray = roundArray
-    )
-    options.transform(superTransform)
-    val glide = Glide.with(context).load(url)
-        .apply(options)
+    val options = RequestOptions()
+        .placeholder(placeholder)
+        .error(error)
+        .skipMemoryCache(skipMemoryCache)
         .diskCacheStrategy(DiskCacheStrategy.ALL)
+        .apply {
+            if (isCenterCrop && scaleType != ImageView.ScaleType.CENTER_CROP)
+                scaleType = ImageView.ScaleType.CENTER_CROP
+            if (isCircle) {
+                transform(CircleCrop())
+            } else if (roundRadius != 0) {
+                if (isCenterCrop) {
+                    transform(CenterCrop(), RoundedCorners(roundRadius))
+                } else {
+                    transform(RoundedCorners(roundRadius))
+                }
+            }
+            if (blurScale > 0) transform(
+                GlideBlurTransformation(
+                    scale = blurScale,
+                    blurRadius = blurRadius
+                )
+            )
+            if (isForceOriginalSize) {
+                override(Target.SIZE_ORIGINAL)
+            }
+            if (targetWidth != 0 && targetHeight != 0) {
+                override(targetWidth, targetHeight)
+            }
+        }
+    val glide = Glide.with(context)
+        .load(if (url is String && url.isNotEmpty()) ExpiresGlideUrl(url) else url)
+        .apply(options)
         .apply {
             if (isCrossFade) transition(DrawableTransitionOptions.withCrossFade())
             if (onImageLoad != null || onImageFail != null) {
@@ -121,6 +119,9 @@ fun ImageView.load(
                         dataSource: DataSource?,
                         isFirstResource: Boolean
                     ): Boolean {
+//                        if (resource is GifDrawable) {
+//                            playOnceGif(resource, onGiftOnce)
+//                        }
                         onImageLoad?.invoke(resource)
                         return false
                     }
@@ -131,48 +132,10 @@ fun ImageView.load(
     glide.into(this)
 }
 
-@SuppressLint("CheckResult")
-fun ImageView.dynamicLoad(
-    url: Any?, placeholder: Int = 0, error: Int = 0,
-    isCircle: Boolean = false,
-    isCenterCrop: Boolean = false,
-    borderSize: Int = 0,
-    borderColor: Int = 0,
-    blurScale: Float = 0f,
-    blurRadius: Float = 20f,
-    roundRadius: Int = 0,
-    roundArray: FloatArray? = null,
-    isCrossFade: Boolean = false,
-    isForceOriginalSize: Boolean = false,
-    targetWidth: Int = 0,
-    targetHeight: Int = 0,
-    onImageLoad: ((resource: Drawable?) -> Unit)? = null,
-    onImageFail: (() -> Unit)? = null
-) {
-    if (context == null) return
-    if (context is Activity && ((context as Activity).isDestroyed || (context as Activity).isFinishing)) return
-    Glide.with(context).asBitmap().load(url)
-        .diskCacheStrategy(DiskCacheStrategy.ALL)
-        .into(object : SimpleTarget<Bitmap>() {
-            override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
-                val width = resource.width
-                val height = resource.height
-                //图片的宽高
-                val dynamicHeight = ScreenUtils.getAppScreenWidth().div(width).times(height)
-                this@dynamicLoad.widthAndHeight(ScreenUtils.getAppScreenWidth(), dynamicHeight)
-                this@dynamicLoad.load(
-                    url, placeholder, error, isCircle, isCenterCrop,
-                    borderSize, borderColor, blurScale, blurRadius, roundRadius,
-                    roundArray, isCrossFade, isForceOriginalSize, targetWidth, targetHeight, onImageLoad, onImageFail
-                )
-            }
-        })
-}
-
-
 fun String.preloadImage(onSuccess: ((Drawable?) -> Unit)? = null, onFail: (() -> Unit)? = null) {
+    if (this.isEmpty() || this.isBlank()) return
     Glide.with(AndroidKTX.context)
-        .load(this)
+        .load(ExpiresGlideUrl(this))
         .diskCacheStrategy(DiskCacheStrategy.ALL)
         .listener(object : RequestListener<Drawable> {
             override fun onLoadFailed(
@@ -198,4 +161,33 @@ fun String.preloadImage(onSuccess: ((Drawable?) -> Unit)? = null, onFail: (() ->
         })
         .preload()
 }
+
+/**
+ * 缓存key 更换
+ */
+class ExpiresGlideUrl(val url: String?) : GlideUrl(url) {
+    override fun getCacheKey(): String? {
+        return if (url.isNullOrEmpty()) {
+            super.getCacheKey()
+        } else {
+            url.replace(findExpiresParam(), "")
+        }
+    }
+
+    private fun findExpiresParam(): String {
+
+
+        var expiresParam = ""
+        val expiresKeyIndex: Int? = url?.indexOf("?Expires=")
+        expiresKeyIndex?.let {
+            if (expiresKeyIndex != -1) {
+                expiresParam = url?.substring(expiresKeyIndex).orEmpty()
+            }
+        }
+
+//        LogUtils.dTag("ExpiresGlideUrl", "param = $expiresParam")
+        return expiresParam
+    }
+}
+
 
