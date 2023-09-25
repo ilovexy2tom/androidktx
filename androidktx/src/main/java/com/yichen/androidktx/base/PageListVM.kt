@@ -5,23 +5,15 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.RecyclerView
 import com.blankj.utilcode.util.LogUtils
-import com.blankj.utilcode.util.ToastUtils
 import com.yichen.androidktx.core.*
 import com.yichen.androidktx.livedata.StateLiveData
 import com.yichen.statelayout.StateLayout
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
-import java.io.Serializable
 import java.lang.IllegalArgumentException
 import java.util.concurrent.CopyOnWriteArrayList
 
-data class ListWrapper<T>(
-    var records: List<T> = listOf<T>(),
-    var total: Int = 10,
-    var current: Int = 1,
-    var pages: Int = 0
-) : Serializable
 
 
 /**
@@ -32,7 +24,6 @@ abstract class PageListVM<T> : ViewModel(),
     var firstLoad = true
     var page = 1
     var hasMore = true
-
     var listData = StateLiveData<CopyOnWriteArrayList<T>>()
     var oldData = arrayListOf<T>()
 
@@ -196,15 +187,15 @@ abstract class PageListVM<T> : ViewModel(),
 
     abstract fun load()
 
-    open fun processData(listWrapper: ListWrapper<T>?, nullIsEmpty: Boolean = false) {
+    open fun processData(data: List<T>?, nullIsEmpty: Boolean = false) {
         firstLoad = false
-        if (listWrapper != null) {
+        if (data != null) {
             if (page == 1) listData.value!!.clear()
             val list = listData.value
             updateOldData()
-            if (!listWrapper.records.isNullOrEmpty()) {
+            if (data.isNotEmpty()) {
                 hasMore = true
-                list?.addAll(listWrapper.records)
+                list?.addAll(data)
                 listData.postValueAndSuccess(list!!)
             } else {
                 //listWrapper数据为空
