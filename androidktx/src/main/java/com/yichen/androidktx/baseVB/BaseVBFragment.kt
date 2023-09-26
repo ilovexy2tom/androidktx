@@ -1,23 +1,19 @@
-package com.yichen.androidktx.base
+package com.yichen.androidktx.baseVB
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
-import com.blankj.utilcode.util.FragmentUtils
+import androidx.viewbinding.ViewBinding
 
 /**
  * Description: 外部容器要使用ViewPager2，自带懒加载效果
  * Create by dance, at 2019/5/16
  */
-abstract class BaseFragment: Fragment(), FragmentUtils.OnBackClickListener{
+abstract class BaseVBFragment<VB: ViewBinding>: BindingFragment<VB>(){
+
 
     private var hasInitData = false
     private var hasInitView = false
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(getLayoutId(), container, false)
-    }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -38,7 +34,6 @@ abstract class BaseFragment: Fragment(), FragmentUtils.OnBackClickListener{
         super.setUserVisibleHint(isVisibleToUser)
         if(isVisibleToUser) onShow() else onHide()
     }
-    protected abstract fun getLayoutId(): Int
     protected abstract fun initView()
     protected abstract fun initData()
 
@@ -51,5 +46,7 @@ abstract class BaseFragment: Fragment(), FragmentUtils.OnBackClickListener{
         hasInitView = false
         hasInitData = false
     }
+
+
 
 }

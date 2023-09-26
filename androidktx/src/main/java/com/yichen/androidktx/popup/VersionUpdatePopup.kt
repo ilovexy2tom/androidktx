@@ -3,11 +3,14 @@ package com.yichen.androidktx.popup
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import com.blankj.utilcode.util.SnackbarUtils.dismiss
+import com.lxj.xpopup.XPopup
+
 import com.yichen.androidktx.core.click
 import com.yichen.androidktx.core.gone
 import com.yichen.androidktx.databinding.PopupVersionUpdateBinding
 import com.yichen.androidktx.util.CommonUpdateInfo
-import com.lxj.xpopup.XPopup
+
 import com.lxj.xpopup.core.CenterPopupView
 
 

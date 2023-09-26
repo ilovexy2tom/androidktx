@@ -1,45 +1,45 @@
 package com.yichen.androidktx.base
 
 import android.view.View
+import android.widget.FrameLayout
 import com.yichen.androidktx.R
 import com.yichen.androidktx.core.click
 import com.yichen.androidktx.core.gone
 import com.yichen.androidktx.core.visible
-import com.yichen.androidktx.databinding.KtxActivityTitlebarBinding
-
-abstract class TitleBarActivity : AdaptActivity<KtxActivityTitlebarBinding>(){
+import com.yichen.androidktx.widget.TitleBar
 
 
-    override fun initView() {
-        binding.flBody.addView(View.inflate(this, getBodyLayout(), null))
-        binding.titleBar.leftImageView().click { finish() }
+abstract class TitleBarActivity : AdaptActivity(){
+    override fun getLayoutId(): Int {
+        return R.layout._ktx_activity_titlebar
     }
 
+    override fun initView() {
+        findViewById<FrameLayout>(R.id.flBody).addView(View.inflate(this, getBodyLayout(), null))
+        findViewById<TitleBar>(R.id.titleBar).leftImageView().click { finish() }
+    }
 
-    override val mClass: Class<*>
-        get() = Class.forName("com.yichen.androidktx.base.TitleBarActivity")
+    fun setStatusBarColor(color: Int) = findViewById<View>(R.id.fakeTitleBar).setBackgroundColor(color)
 
-    fun setStatusBarColor(color: Int) = binding.fakeTitleBar.setBackgroundColor(color)
+    fun titleBar() = findViewById<TitleBar>(R.id.titleBar)
 
-    fun titleBar() = binding.titleBar
-
-    fun hideTitleDivider() = binding.titleDivider.gone()
+    fun hideTitleDivider() = findViewById<View>(R.id.titleDivider).gone()
 
     abstract fun getBodyLayout(): Int
 
     fun hideTitleBar(){
         titleBar().gone()
-        binding.fakeTitleBar.gone()
-        binding.titleDivider.gone()
+        findViewById<View>(R.id.fakeTitleBar).gone()
+        findViewById<View>(R.id.titleDivider).gone()
     }
     fun hideTitleBarWithMarginTop(){
         titleBar().gone()
-        binding.titleDivider.gone()
+        findViewById<View>(R.id.titleDivider).gone()
     }
 
     fun showTitleBar(){
         titleBar().visible()
-        binding.fakeTitleBar.visible()
-        binding.titleDivider.visible()
+        findViewById<View>(R.id.fakeTitleBar).visible()
+        findViewById<View>(R.id.titleDivider).visible()
     }
 }

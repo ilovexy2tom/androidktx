@@ -1,9 +1,7 @@
-package com.yichen.androidktx.base
+package com.yichen.androidktx.baseVB
 
 import android.content.Intent
 import android.graphics.Color
-import android.net.http.SslError
-import android.webkit.SslErrorHandler
 import android.webkit.WebView
 import android.widget.FrameLayout
 import com.blankj.utilcode.util.KeyboardUtils
@@ -18,8 +16,8 @@ import com.yichen.androidktx.core.dp
 import com.yichen.androidktx.core.string
 
 
+open class WebVBActivityVB : TitleBarVBActivityVB() {
 
-open class WebActivity : TitleBarActivity() {
 
     companion object {
         var onRightClickAction: (() -> Unit)? = null
@@ -64,7 +62,7 @@ open class WebActivity : TitleBarActivity() {
                     LogUtils.d("content: $content")
                 }
             }
-            val intent = Intent(AndroidKTX.context, WebActivity::class.java)
+            val intent = Intent(AndroidKTX.context, WebVBActivityVB::class.java)
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             intent.putExtra("hideTitleBar", hideTitleBar)
             intent.putExtra("keepMarginTop", keepMarginTop)
@@ -160,7 +158,7 @@ open class WebActivity : TitleBarActivity() {
         }
     }
 
-   open fun loadData(url: String, content: String) {
+    fun loadData(url: String, content: String) {
         if (url.isNotEmpty()) {
             agentWeb = AgentWeb.with(this)
                 .setAgentWebParent(findViewById(R.id.webViewParent), FrameLayout.LayoutParams(-1, -1))

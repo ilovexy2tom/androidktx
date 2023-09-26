@@ -1,29 +1,25 @@
-package com.yichen.androidktx.base
+package com.yichen.androidktx.baseVB
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
-import com.blankj.utilcode.util.FragmentUtils
+import androidx.viewbinding.ViewBinding
 import com.yichen.androidktx.core.postDelay
 import com.yichen.statelayout.StateLayout
 
 /**
  * 自带StateLayout的Fragment基类，适用于ViewPager的懒加载方案
  */
-abstract class PagerStateFragment : Fragment(), FragmentUtils.OnBackClickListener {
-    protected var cacheView: View? = null
+abstract class PagerStateVBFragment<VB:ViewBinding> : BindingFragment<VB>() {
     protected var isInit = false
     protected var stateLayout: StateLayout? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        if (cacheView == null) {
-            cacheView = inflater.inflate(getLayoutId(), container, false)
-            stateLayout = StateLayout(requireContext()).wrap(cacheView)
+
+            stateLayout = StateLayout(requireContext()).wrap(_binding?.root)
             onConfigStateLayout()
             stateLayout!!.showLoading()
-        }
         return stateLayout!!
     }
 
@@ -50,7 +46,7 @@ abstract class PagerStateFragment : Fragment(), FragmentUtils.OnBackClickListene
     }
 
     private fun lazyInit() {
-        if (cacheView != null && userVisibleHint && !isInit) {
+        if (_binding != null && userVisibleHint && !isInit) {
             initView()
             initData()
             if(autoShowContent())postDelay(350){showContent()}

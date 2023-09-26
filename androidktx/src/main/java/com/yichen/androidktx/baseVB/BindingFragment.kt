@@ -1,4 +1,4 @@
-package com.yichen.androidktx.base
+package com.yichen.androidktx.baseVB
 
 import android.os.Bundle
 import android.view.LayoutInflater

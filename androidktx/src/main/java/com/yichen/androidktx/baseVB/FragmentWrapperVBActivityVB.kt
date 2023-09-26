@@ -1,4 +1,4 @@
-package com.yichen.androidktx.base
+package com.yichen.androidktx.baseVB
 
 import android.app.Activity
 import android.content.Intent
@@ -10,10 +10,11 @@ import com.yichen.androidktx.R
 import com.yichen.androidktx.core.replace
 
 
+
 /**
  * 将Fragment包裹为Activity
  */
-class FragmentWrapperActivity : TitleBarActivity() {
+class FragmentWrapperVBActivityVB : TitleBarVBActivityVB() {
 
     companion object{
         fun start(act: Activity?, fragmentName: String, title: String? = null, bundle: Bundle? = null,
@@ -23,7 +24,7 @@ class FragmentWrapperActivity : TitleBarActivity() {
                 ToastUtils.showShort("fragmentName can not be null or empty")
                 return
             }
-            val intent = Intent(AndroidKTX.context, FragmentWrapperActivity::class.java).apply {
+            val intent = Intent(AndroidKTX.context, FragmentWrapperVBActivityVB::class.java).apply {
                 if(!title.isNullOrEmpty()) putExtra("title", title)
                 if(bundle!=null) putExtra("bundle", bundle)
                 putExtra("fragment", fragmentName)
@@ -47,8 +48,7 @@ class FragmentWrapperActivity : TitleBarActivity() {
         }else{
             titleBar().setup(title = title, leftImageRes = R.mipmap._ktx_ic_back)
         }
-        replace(
-            R.id.flWrapper, Fragment.instantiate(this, intent.getStringExtra("fragment")?:"",
+        replace(R.id.flWrapper, Fragment.instantiate(this, intent.getStringExtra("fragment")?:"",
             bundle))
         LogUtils.e(bundle)
     }

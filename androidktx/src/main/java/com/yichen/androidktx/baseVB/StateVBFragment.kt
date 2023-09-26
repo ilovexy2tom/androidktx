@@ -1,4 +1,4 @@
-package com.yichen.androidktx.base
+package com.yichen.androidktx.baseVB
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,25 +6,31 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.blankj.utilcode.util.FragmentUtils
-import com.yichen.androidktx.core.postDelay
 import com.yichen.statelayout.StateLayout
 
 /**
- * 自带StateLayout的Fragment基类，适用于ViewPager的懒加载方案
+ * 自带StateLayout的Fragment基类，适用于ViewPager2的懒加载方案
  */
-abstract class PagerStateFragment : Fragment(), FragmentUtils.OnBackClickListener {
-    protected var cacheView: View? = null
-    protected var isInit = false
+abstract class StateVBFragment : Fragment(), FragmentUtils.OnBackClickListener {
+    private var hasInitView = false
+    private var hasInitData = false
     protected var stateLayout: StateLayout? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        if (cacheView == null) {
-            cacheView = inflater.inflate(getLayoutId(), container, false)
-            stateLayout = StateLayout(requireContext()).wrap(cacheView)
+        if (stateLayout == null) {
+            val cacheView = inflater.inflate(getLayoutId(), container, false)
+            stateLayout = StateLayout(requireContext()).config(defaultShowLoading = true).wrap(cacheView)
             onConfigStateLayout()
-            stateLayout!!.showLoading()
         }
         return stateLayout!!
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        if(!hasInitView){
+            hasInitView = true
+            initView()
+        }
     }
 
     /**
@@ -37,33 +43,19 @@ abstract class PagerStateFragment : Fragment(), FragmentUtils.OnBackClickListene
     open fun showContent() = stateLayout?.showContent()
     open fun showLoading() = stateLayout?.showLoading()
     open fun showError() = stateLayout?.showError()
-    open fun showEmpty(){
-        stateLayout?.showEmpty()
-    }
-
-    //是否自动显示Content
-    open fun autoShowContent() = false
+    open fun showEmpty() = stateLayout?.showEmpty()
 
     override fun onResume() {
         super.onResume()
-        lazyInit()
-    }
-
-    private fun lazyInit() {
-        if (cacheView != null && userVisibleHint && !isInit) {
-            initView()
+        if(!hasInitData){
+            hasInitData = true
             initData()
-            if(autoShowContent())postDelay(350){showContent()}
-            isInit = true
         }
     }
-
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {
         super.setUserVisibleHint(isVisibleToUser)
-        lazyInit()
         if(isVisibleToUser) onShow() else onHide()
     }
-
     //执行初始化，只会执行一次
     protected abstract fun getLayoutId(): Int
     abstract fun initView()
@@ -72,5 +64,4 @@ abstract class PagerStateFragment : Fragment(), FragmentUtils.OnBackClickListene
     open fun onHide(){}
 
     override fun onBackClick() = false
-
 }

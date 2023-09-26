@@ -1,25 +1,43 @@
-package com.yichen.androidktx.base
+package com.yichen.androidktx.baseVB
 
+import android.content.Context
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.viewbinding.ViewBinding
 import com.blankj.utilcode.util.FragmentUtils
 import com.blankj.utilcode.util.KeyboardUtils
-import com.blankj.utilcode.util.LogUtils
+import com.blankj.utilcode.util.LanguageUtils
 import com.blankj.utilcode.util.ToastUtils
+import com.yichen.androidktx.util.ViewBindingCreator
 
 /**
  * Description:
  * Create by dance, at 2019/5/16
  */
-abstract class BaseActivity : AppCompatActivity() {
+abstract class VBBaseActivity<VB : ViewBinding> : AppCompatActivity() {
+
+    protected val binding by lazy {
+        ViewBindingCreator.createViewBinding<VB>(
+            mClass,
+            layoutInflater
+        )!!
+    }
+
+    open val mClass:Class<*> by lazy { javaClass }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(getLayoutId())
+        setContentView(binding.root)
         initView()
         initData()
     }
 
-    protected abstract fun getLayoutId(): Int
+    override fun attachBaseContext(newBase: Context?) {
+        super.attachBaseContext(newBase)
+        LanguageUtils.attachBaseContext(newBase)
+    }
+
+
     protected abstract fun initView()
     protected abstract fun initData()
 
@@ -29,20 +47,22 @@ abstract class BaseActivity : AppCompatActivity() {
     }
 
     private var lastBackPressTime = 0L
+
     /**
      * 两次返回退出Activity
      */
     protected fun doubleBackToFinish(duration: Long = 2000, toast: String = "再按一次退出") {
         if (!FragmentUtils.dispatchBackPress(supportFragmentManager)) {
-            if(System.currentTimeMillis() - lastBackPressTime < duration){
+            if (System.currentTimeMillis() - lastBackPressTime < duration) {
                 ToastUtils.cancel()
                 super.onBackPressed()
-            }else{
+            } else {
                 lastBackPressTime = System.currentTimeMillis()
                 ToastUtils.showShort(toast)
             }
         }
     }
+
     override fun onBackPressed() {
         if (!FragmentUtils.dispatchBackPress(supportFragmentManager)) {
             super.onBackPressed()

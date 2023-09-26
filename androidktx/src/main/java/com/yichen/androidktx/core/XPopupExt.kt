@@ -4,21 +4,22 @@ import android.app.Application
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.*
 import com.blankj.utilcode.util.ToastUtils
-import com.lxj.xpopup.core.BasePopupView
+
 import com.yichen.androidktx.AndroidKTX
 import com.yichen.androidktx.livedata.StateLiveData
 import com.lxj.xpopup.XPopup
+import com.lxj.xpopup.core.BasePopupView
 import com.lxj.xpopup.enums.PopupStatus
 
 /**
  * 绑定LiveData的状态，警惕LoadingView过早关闭的时候，state的状态还未执行
  */
 fun BasePopupView.bindState(liveData: StateLiveData<*>,
-                               onLoading: (()->Unit)? = null,
-                               onSuccess: (()->Unit)? = null,
-                               onError: (()->Unit)? = null,
-                               onEmpty: (()->Unit)? = null,
-                               autoShowError: Boolean = false){
+                            onLoading: (()->Unit)? = null,
+                            onSuccess: (()->Unit)? = null,
+                            onError: (()->Unit)? = null,
+                            onEmpty: (()->Unit)? = null,
+                            autoShowError: Boolean = false){
     val delay = XPopup.getAnimationDuration().toLong()+10
     when(liveData.state.value){
         StateLiveData.State.Loading->{
@@ -27,7 +28,7 @@ fun BasePopupView.bindState(liveData: StateLiveData<*>,
         }
         StateLiveData.State.Success->{
             //如果状态异常，已经关闭或正在关闭
-            if(popupStatus==PopupStatus.Dismissing || popupStatus==PopupStatus.Dismiss){
+            if(popupStatus== PopupStatus.Dismissing || popupStatus==PopupStatus.Dismiss){
                 onSuccess?.invoke()
             }else{
                 delayDismissWith(delay){
@@ -71,12 +72,12 @@ fun BasePopupView.bindState(liveData: StateLiveData<*>,
  * 直接监听state状态
  */
 fun BasePopupView.observeState(owner: LifecycleOwner,
-                                  liveData: StateLiveData<*>,
-                                  onLoading: (()->Unit)? = null,
-                                  onSuccess: (()->Unit)? = null,
-                                  onError: (()->Unit)? = null,
-                                  onEmpty: (()->Unit)? = null,
-                                  autoShowError: Boolean = false){
+                               liveData: StateLiveData<*>,
+                               onLoading: (()->Unit)? = null,
+                               onSuccess: (()->Unit)? = null,
+                               onError: (()->Unit)? = null,
+                               onEmpty: (()->Unit)? = null,
+                               autoShowError: Boolean = false){
     liveData.state.observe(owner, Observer<StateLiveData.State> {
         bindState(liveData, onLoading = onLoading, onSuccess = onSuccess,
                 onError = onError, onEmpty = onEmpty, autoShowError = autoShowError)

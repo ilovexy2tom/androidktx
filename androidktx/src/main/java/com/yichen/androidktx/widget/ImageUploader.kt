@@ -7,9 +7,9 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.blankj.utilcode.util.ToastUtils
 import com.google.android.flexbox.FlexboxLayoutManager
+import com.lxj.xpopup.XPopup
 import com.yichen.androidktx.R
 import com.yichen.androidktx.core.*
-import com.lxj.xpopup.XPopup
 import com.lxj.xpopup.util.SmartGlideImageLoader
 
 /**

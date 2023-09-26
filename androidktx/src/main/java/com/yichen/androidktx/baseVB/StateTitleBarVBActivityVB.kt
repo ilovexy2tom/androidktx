@@ -1,17 +1,14 @@
-package com.yichen.androidktx.base
+package com.yichen.androidktx.baseVB
 
-import android.widget.FrameLayout
-import com.yichen.androidktx.R
 import com.yichen.androidktx.core.postDelay
+import com.yichen.androidktx.databinding.KtxActivityTitlebarBinding
 import com.yichen.statelayout.StateLayout
 
-
-abstract class StateTitleBarActivity : TitleBarActivity(){
+abstract class StateTitleBarVBActivityVB : AdaptVBActivityVB<KtxActivityTitlebarBinding>(){
 
     var stateLayout : StateLayout? = null
     override fun initView() {
-        super.initView()
-        stateLayout = StateLayout(this).wrap(findViewById<FrameLayout>(R.id.flBody))
+        stateLayout = StateLayout(this).wrap(binding.flBody)
         onConfigStateLayout()
         stateLayout!!.showLoading()
         if(autoShowContent()) postDelay(400){showContent()}

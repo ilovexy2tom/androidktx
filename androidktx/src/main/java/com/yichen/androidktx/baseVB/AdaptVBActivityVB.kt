@@ -1,8 +1,9 @@
-package com.yichen.androidktx.base
+package com.yichen.androidktx.baseVB
 
 import android.content.res.Resources
 import android.graphics.Color
 import android.os.Bundle
+import androidx.viewbinding.ViewBinding
 import com.blankj.utilcode.util.AdaptScreenUtils
 import com.blankj.utilcode.util.BarUtils
 import com.blankj.utilcode.util.ScreenUtils
@@ -15,7 +16,7 @@ import com.blankj.utilcode.util.ScreenUtils
  * 此时等同于dp适配
  * Create by dance, at 2019/5/16
  */
-abstract class AdaptActivity : BaseActivity() {
+abstract class AdaptVBActivityVB<VB:ViewBinding> : VBBaseActivity<VB>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         BarUtils.setStatusBarLightMode(this, isLightStatusBar())//显示黑字体
         BarUtils.setStatusBarColor(this, Color.TRANSPARENT).setBackgroundResource(getStatusBarColor())
@@ -30,7 +31,7 @@ abstract class AdaptActivity : BaseActivity() {
     }
 
     open fun getDesignWidth() = 375
-    open fun getDesignHeight() = 812
+    open fun getDesignHeight() = 750
 
     open fun isLightStatusBar() = true
 
