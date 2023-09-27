@@ -28,22 +28,30 @@ object AndroidKTX {
      * 初始化配置信息，必须调用
      * @param isDebug 是否是debug模式，默认为true
      */
-    fun init(context: Context,
-             isDebug: Boolean = true,
-             defaultLogTag: String = AndroidKTX.defaultLogTag,
-             sharedPrefName: String = AndroidKTX.sharedPrefName
+    fun init(
+        context: Context,
+        isDebug: Boolean = true,
+        isInitRefresh: Boolean = true,
+        isInitToast: Boolean = true,
+        defaultLogTag: String = AndroidKTX.defaultLogTag,
+        sharedPrefName: String = AndroidKTX.sharedPrefName
     ) {
         this.context = context
         this.isDebug = isDebug
         this.defaultLogTag = defaultLogTag
         this.sharedPrefName = sharedPrefName
-        if(context is Application){
+        if (context is Application) {
             Utils.init(context)
         }
-        ToastUtils.getDefaultMaker().setGravity(Gravity.CENTER, 0 , 0)
-        ToastUtils.getDefaultMaker().setBgResource(R.drawable._ktx_toast_bg)
-        ToastUtils.getDefaultMaker().setTextColor(Color.WHITE)
-        initRefresh()
+        if (isInitToast){
+            ToastUtils.getDefaultMaker().setGravity(Gravity.CENTER, 0, 0)
+            ToastUtils.getDefaultMaker().setBgResource(R.drawable._ktx_toast_bg)
+            ToastUtils.getDefaultMaker().setTextColor(Color.WHITE)
+        }
+        if (isInitToast){
+            initRefresh()
+        }
+
         DirManager.init()
     }
 
