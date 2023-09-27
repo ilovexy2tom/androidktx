@@ -19,22 +19,22 @@ import com.yichen.androidktx.databinding.LoadingBinding
 class LoadingView : FrameLayout {
     constructor(context: Context) : super(context) {}
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {}
-    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {}
-    private lateinit var binding: LoadingBinding
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(
+        context,
+        attrs,
+        defStyleAttr
+    ) {
+    }
+
     init {
-        binding = LoadingBinding.inflate(
-            LayoutInflater.from(context),
-            this,
-            false
-        )
-//        inflate(context, R.layout._loading, this)
-        if (!isInEditMode) {
-            post {
-                Glide.with(this)
-                    .asGif()
-                    .load(R.mipmap.loading)
-                    .into(binding.ivLoading)
-            }
-        }
+        inflate(context, R.layout._loading, this)
+//        if (!isInEditMode) {
+//            post {
+//                Glide.with(this)
+//                    .asGif()
+//                    .load(R.mipmap.loading)
+//                    .into(binding.ivLoading)
+//            }
+//        }
     }
 }
