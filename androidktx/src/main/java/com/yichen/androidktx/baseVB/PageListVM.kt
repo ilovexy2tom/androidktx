@@ -22,7 +22,8 @@ import java.util.concurrent.CopyOnWriteArrayList
 abstract class PageListVM<T> : ViewModel(),
     OnRefreshLoadMoreListener {
     var firstLoad = true
-    var page = 1
+    var startPage = 1
+    var page = startPage
     var hasMore = true
     var listData = StateLiveData<CopyOnWriteArrayList<T>>()
     var oldData = arrayListOf<T>()
@@ -30,7 +31,6 @@ abstract class PageListVM<T> : ViewModel(),
     init {
         listData.value = CopyOnWriteArrayList()
     }
-
     var onRefreshCB: (() -> Unit)? = null
     var onLoadMoreCB: (() -> Unit)? = null
     open fun bindRecyclerView(
@@ -121,7 +121,7 @@ abstract class PageListVM<T> : ViewModel(),
 
     open fun refresh() {
         LogUtils.dTag("test", "refresh")
-        page = 1
+        page = startPage
         load()
         onRefreshCB?.invoke()
     }
@@ -190,7 +190,7 @@ abstract class PageListVM<T> : ViewModel(),
     open fun processData(data: List<T>?, nullIsEmpty: Boolean = false) {
         firstLoad = false
         if (data != null) {
-            if (page == 1) listData.value!!.clear()
+            if (page == startPage) listData.value!!.clear()
             val list = listData.value
             updateOldData()
             if (data.isNotEmpty()) {
@@ -258,7 +258,7 @@ abstract class PageListVM<T> : ViewModel(),
     }
 
     fun reset() {
-        page = 1
+        page = startPage
         hasMore = true
         listData.postValueAndSuccess(CopyOnWriteArrayList())
     }
