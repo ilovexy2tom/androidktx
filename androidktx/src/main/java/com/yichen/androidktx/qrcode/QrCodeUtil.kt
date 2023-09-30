@@ -16,6 +16,7 @@ import com.blankj.utilcode.util.PermissionUtils
 import com.blankj.utilcode.util.ThreadUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.blankj.utilcode.util.ViewUtils
+import com.yichen.androidktx.core.PermissionExt
 
 /**
  * 二维码/条形码工具类
@@ -29,32 +30,20 @@ object QrCodeUtil {
      */
     fun start(source: Any, reqCode: Int = 1, color: Int? = null, launcher: ActivityResultLauncher<Intent>) {
         requestCode = reqCode
-        PermissionUtils.permission(
-            PermissionConstants.CAMERA,
-            PermissionConstants.CAMERA, PermissionConstants.STORAGE
-        ).callback(object : PermissionUtils.SimpleCallback {
-            override fun onGranted() {
-                if (source is AppCompatActivity) {
-                    val intent = Intent(source, QrCodeActivity::class.java)
-                    if (color != null) intent.putExtra("color", color)
-//                        source.startActivityForResult(intent, reqCode)
-                    launcher.launch(intent)
+        PermissionExt.applyOnlyCameraPermission(PermissionExt.getContext(source)){
+            if (source is AppCompatActivity) {
+                val intent = Intent(source, QrCodeActivity::class.java)
+                if (color != null) intent.putExtra("color", color)
+                launcher.launch(intent)
 
 
-                } else if (source is Fragment) {
-                    val intent = Intent(source.context, QrCodeActivity::class.java)
-                    if (color != null) intent.putExtra("color", color)
-//                        source.startActivityForResult(intent, reqCode)
-                    launcher.launch(intent)
-                }
-
-
+            } else if (source is Fragment) {
+                val intent = Intent(source.context, QrCodeActivity::class.java)
+                if (color != null) intent.putExtra("color", color)
+                launcher.launch(intent)
             }
+        }
 
-            override fun onDenied() {
-                ToastUtils.showShort("权限拒绝，无法使用扫描功能")
-            }
-        }).request()
     }
 
     /**
