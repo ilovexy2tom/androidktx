@@ -13,7 +13,7 @@
         android:hardwareAccelerated="true"
         android:networkSecurityConfig="@xml/network_security_config">
         <activity
-            android:name=".baseVB.WebVBActivityVB"
+            android:name=".baseVB.WebVBActivity"
             android:configChanges="orientation|screenSize"
             android:hardwareAccelerated="true"
             android:theme="@style/_FullScreenTheme" />
@@ -26,7 +26,7 @@
             android:name=".picker.PickerEmptyActivity"
             android:launchMode="singleTop"
             android:theme="@style/_TranslucentTheme" />
-        <activity android:name=".baseVB.FragmentWrapperVBActivityVB" android:screenOrientation="portrait"/>
+        <activity android:name=".baseVB.FragmentWrapperVBActivity" android:screenOrientation="portrait"/>
         <activity android:name=".picker.KTXCameraActivity" android:screenOrientation="portrait"
             android:theme="@style/_FullScreenTheme"/>
 

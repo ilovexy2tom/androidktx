@@ -16,7 +16,7 @@ import com.yichen.androidktx.core.dp
 import com.yichen.androidktx.core.string
 
 
-open class WebVBActivityVB : TitleBarVBActivityVB() {
+open class WebVBActivity : TitleBarVBActivity() {
 
 
     companion object {
@@ -62,7 +62,7 @@ open class WebVBActivityVB : TitleBarVBActivityVB() {
                     LogUtils.d("content: $content")
                 }
             }
-            val intent = Intent(AndroidKTX.context, WebVBActivityVB::class.java)
+            val intent = Intent(AndroidKTX.context, WebVBActivity::class.java)
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             intent.putExtra("hideTitleBar", hideTitleBar)
             intent.putExtra("keepMarginTop", keepMarginTop)

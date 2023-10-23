@@ -8,13 +8,13 @@ import com.blankj.utilcode.util.*
 import com.yichen.androidktx.AndroidKTX
 import com.yichen.androidktx.R
 import com.yichen.androidktx.core.replace
-
+import com.yichen.androidktx.databinding.KtxActivityFragWrapperBinding
 
 
 /**
  * 将Fragment包裹为Activity
  */
-class FragmentWrapperVBActivityVB : TitleBarVBActivityVB() {
+class FragmentWrapperVBActivity : TitleBarVBActivity<KtxActivityFragWrapperBinding>() {
 
     companion object{
         fun start(act: Activity?, fragmentName: String, title: String? = null, bundle: Bundle? = null,
@@ -24,7 +24,7 @@ class FragmentWrapperVBActivityVB : TitleBarVBActivityVB() {
                 ToastUtils.showShort("fragmentName can not be null or empty")
                 return
             }
-            val intent = Intent(AndroidKTX.context, FragmentWrapperVBActivityVB::class.java).apply {
+            val intent = Intent(AndroidKTX.context, FragmentWrapperVBActivity::class.java).apply {
                 if(!title.isNullOrEmpty()) putExtra("title", title)
                 if(bundle!=null) putExtra("bundle", bundle)
                 putExtra("fragment", fragmentName)
@@ -34,7 +34,7 @@ class FragmentWrapperVBActivityVB : TitleBarVBActivityVB() {
         }
     }
 
-    override fun getBodyLayout() = R.layout._ktx_activity_frag_wrapper
+
 
     override fun initData() {
         val bundle = intent?.getBundleExtra("bundle")

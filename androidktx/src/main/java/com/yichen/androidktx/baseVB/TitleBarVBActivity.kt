@@ -1,16 +1,23 @@
 package com.yichen.androidktx.baseVB
 
 import android.view.View
+import androidx.viewbinding.ViewBinding
 import com.yichen.androidktx.core.click
 import com.yichen.androidktx.core.gone
 import com.yichen.androidktx.core.visible
 import com.yichen.androidktx.databinding.KtxActivityTitlebarBinding
+import com.yichen.androidktx.util.ViewBindingCreator
 
-abstract class TitleBarVBActivityVB : AdaptVBActivityVB<KtxActivityTitlebarBinding>(){
+abstract class TitleBarVBActivity<VB:ViewBinding> : AdaptVBActivity<KtxActivityTitlebarBinding>(){
 
-
+    protected val childBinding by lazy {
+        ViewBindingCreator.createViewBinding<VB>(
+            this.javaClass,
+            layoutInflater
+        )!!
+    }
     override fun initView() {
-        binding.flBody.addView(View.inflate(this, getBodyLayout(), null))
+        binding.flBody.addView(childBinding.root)
         binding.titleBar.leftImageView().click { finish() }
     }
 
@@ -24,7 +31,7 @@ abstract class TitleBarVBActivityVB : AdaptVBActivityVB<KtxActivityTitlebarBindi
 
     fun hideTitleDivider() = binding.titleDivider.gone()
 
-    abstract fun getBodyLayout(): Int
+
 
     fun hideTitleBar(){
         titleBar().gone()

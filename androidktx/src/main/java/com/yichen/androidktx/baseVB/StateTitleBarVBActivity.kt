@@ -4,7 +4,7 @@ import com.yichen.androidktx.core.postDelay
 import com.yichen.androidktx.databinding.KtxActivityTitlebarBinding
 import com.yichen.statelayout.StateLayout
 
-abstract class StateTitleBarVBActivityVB : AdaptVBActivityVB<KtxActivityTitlebarBinding>(){
+abstract class StateTitleBarVBActivity : AdaptVBActivity<KtxActivityTitlebarBinding>(){
 
     var stateLayout : StateLayout? = null
     override fun initView() {

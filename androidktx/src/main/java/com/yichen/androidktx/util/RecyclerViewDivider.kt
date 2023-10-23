@@ -143,10 +143,17 @@ class RecyclerViewDivider(context: Context, orientation: Int)
             outRect[0, 0, 0] = 0
             return
         }
-        if (mOrientation == VERTICAL) {
-            outRect[0, 0, 0] = mDivider!!.intrinsicHeight
+        val position = parent.getChildAdapterPosition(view)
+        val lastPosition = (parent.adapter?.itemCount ?: 0).minus(1)
+        if (position == lastPosition) {
+            // 最后一行不添加分割线
+            outRect.set(0, 0, 0, 0);
         } else {
-            outRect[0, 0, mDivider!!.intrinsicWidth] = 0
+            if (mOrientation == VERTICAL) {
+                outRect[0, 0, 0] = mDivider!!.intrinsicHeight
+            } else {
+                outRect[0, 0, mDivider!!.intrinsicWidth] = 0
+            }
         }
     }
 }

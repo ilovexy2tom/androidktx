@@ -16,7 +16,7 @@ import com.blankj.utilcode.util.ScreenUtils
  * 此时等同于dp适配
  * Create by dance, at 2019/5/16
  */
-abstract class AdaptVBActivityVB<VB:ViewBinding> : VBBaseActivity<VB>() {
+abstract class AdaptVBActivity<VB:ViewBinding> : BaseVBActivity<VB>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         BarUtils.setStatusBarLightMode(this, isLightStatusBar())//显示黑字体
         BarUtils.setStatusBarColor(this, Color.TRANSPARENT).setBackgroundResource(getStatusBarColor())

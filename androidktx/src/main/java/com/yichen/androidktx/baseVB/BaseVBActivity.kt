@@ -14,7 +14,7 @@ import com.yichen.androidktx.util.ViewBindingCreator
  * Description:
  * Create by dance, at 2019/5/16
  */
-abstract class VBBaseActivity<VB : ViewBinding> : AppCompatActivity() {
+abstract class BaseVBActivity<VB : ViewBinding> : AppCompatActivity() {
 
     protected val binding by lazy {
         ViewBindingCreator.createViewBinding<VB>(
