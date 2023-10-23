@@ -14,9 +14,10 @@ import com.yichen.androidktx.R
 import com.yichen.androidktx.core.click
 import com.yichen.androidktx.core.dp
 import com.yichen.androidktx.core.string
+import com.yichen.androidktx.databinding.KtxActivityWebBinding
 
 
-open class WebVBActivity : TitleBarVBActivity() {
+open class WebVBActivity : TitleBarVBActivity<KtxActivityWebBinding>() {
 
 
     companion object {
@@ -88,7 +89,6 @@ open class WebVBActivity : TitleBarVBActivity() {
         }
     }
 
-    override fun getBodyLayout() = R.layout._ktx_activity_web
     var title: String? = null
     lateinit var agentWeb: AgentWeb
     var enableCache = false
@@ -161,7 +161,7 @@ open class WebVBActivity : TitleBarVBActivity() {
     fun loadData(url: String, content: String) {
         if (url.isNotEmpty()) {
             agentWeb = AgentWeb.with(this)
-                .setAgentWebParent(findViewById(R.id.webViewParent), FrameLayout.LayoutParams(-1, -1))
+                .setAgentWebParent(childBinding.webViewParent, FrameLayout.LayoutParams(-1, -1))
                 .useDefaultIndicator(indicatorColor, 1.dp)
                 .setWebViewClient(mWebViewClient)
                 .setWebChromeClient(mWebChromeClient)
@@ -169,7 +169,7 @@ open class WebVBActivity : TitleBarVBActivity() {
                 .ready().go(url)
         } else {
             agentWeb = AgentWeb.with(this)
-                .setAgentWebParent(findViewById(R.id.webViewParent), FrameLayout.LayoutParams(-1, -1))
+                .setAgentWebParent(childBinding.webViewParent, FrameLayout.LayoutParams(-1, -1))
                 .useDefaultIndicator(indicatorColor, 1.dp)
                 .setWebViewClient(mWebViewClient)
                 .setWebChromeClient(mWebChromeClient)
