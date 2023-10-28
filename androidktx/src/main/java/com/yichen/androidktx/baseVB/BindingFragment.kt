@@ -10,19 +10,23 @@ import com.blankj.utilcode.util.FragmentUtils
 import com.yichen.androidktx.util.ViewBindingCreator
 
 /**
- * Description: 外部容器要使用ViewPager2，自带懒加载效果
- * Create by dance, at 2019/5/16
+ * Description:
+ * 之所以[_binding]没有用private修饰，是因为 [_binding] 某些情况下，fragment会被销毁，
+ * 但仍然需要使用[_binding]里面的view， 判断非空使用[_binding]?.let{...}
+ * Create by dance, at 2023/10/28
  */
-abstract class BindingFragment<VB: ViewBinding>: Fragment(), FragmentUtils.OnBackClickListener{
+abstract class BindingFragment<VB : ViewBinding> : Fragment(), FragmentUtils.OnBackClickListener {
 
-    var _binding:VB?=null
-    val binding get()= _binding!!
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        if(_binding==null)_binding = getLayoutBinding(inflater,container)
+    var _binding: VB? = null
+    val binding get() = _binding!!
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        if (_binding == null) _binding = getLayoutBinding(inflater, container)
         return binding.root
     }
-
-
 
 
     private fun getLayoutBinding(

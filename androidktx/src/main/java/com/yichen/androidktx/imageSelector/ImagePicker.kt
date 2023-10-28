@@ -1,4 +1,4 @@
-package com.swimParent.app.tools.imageSelector
+package com.yichen.androidktx.imageSelector
 
 import android.content.pm.ActivityInfo
 import androidx.appcompat.app.AppCompatActivity
@@ -12,7 +12,6 @@ import com.luck.picture.lib.engine.CompressFileEngine
 import com.luck.picture.lib.entity.LocalMedia
 import com.luck.picture.lib.interfaces.OnResultCallbackListener
 import com.luck.picture.lib.language.LanguageConfig
-import com.yichen.androidktx.imageSelector.GlideEngine
 import top.zibin.luban.Luban
 import top.zibin.luban.OnNewCompressListener
 import java.io.File
