@@ -117,9 +117,9 @@ dependencies {
 
 
     //View
-    api 'io.github.scwang90:refresh-layout-kernel:2.0.5'
-    api 'io.github.scwang90:refresh-header-classics:2.0.5'
-    api 'io.github.scwang90:refresh-footer-classics:2.0.5' //刷新组建
+    api 'io.github.scwang90:refresh-layout-kernel:2.1.0'
+    api 'io.github.scwang90:refresh-header-classics:2.1.0'
+    api 'io.github.scwang90:refresh-footer-classics:2.1.0' //刷新组建
     api 'com.jaeger.ninegridimageview:library:1.1.1'  //Ninegridimage
 //    api 'com.otaliastudios:cameraview:2.7.2'//camera
 //    api 'com.github.yalantis:ucrop:2.2.8'//crop

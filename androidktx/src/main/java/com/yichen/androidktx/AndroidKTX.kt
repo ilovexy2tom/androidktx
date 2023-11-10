@@ -48,7 +48,7 @@ object AndroidKTX {
             ToastUtils.getDefaultMaker().setBgResource(R.drawable._ktx_toast_bg)
             ToastUtils.getDefaultMaker().setTextColor(Color.WHITE)
         }
-        if (isInitToast){
+        if (isInitRefresh){
             initRefresh()
         }
 
