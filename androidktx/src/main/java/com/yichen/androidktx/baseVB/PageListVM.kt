@@ -15,7 +15,6 @@ import java.lang.IllegalArgumentException
 import java.util.concurrent.CopyOnWriteArrayList
 
 
-
 /**
  * 注意一定要实现getDiffCallback，否则数据更新只能采用 notifyDataSetChanged()
  */
@@ -31,6 +30,7 @@ abstract class PageListVM<T> : ViewModel(),
     init {
         listData.value = CopyOnWriteArrayList()
     }
+
     var onRefreshCB: (() -> Unit)? = null
     var onLoadMoreCB: (() -> Unit)? = null
     open fun bindRecyclerView(
@@ -41,7 +41,7 @@ abstract class PageListVM<T> : ViewModel(),
         firstShowLoading: Boolean = false,
         autoLoadData: Boolean = true,
         delay: Long = 250,//加一点延迟，loading闪烁
-        isForceContent:Boolean = false,//state为Empty为空的时候也显示content
+        isForceContent: Boolean = false,//state为Empty为空的时候也显示content
         onRefresh: (() -> Unit)? = null,
         onLoadMore: (() -> Unit)? = null,
         onDataUpdate: (() -> Unit)? = null,
@@ -65,23 +65,24 @@ abstract class PageListVM<T> : ViewModel(),
                         stateLayout?.showLoading()
                     }
                 }
+
                 StateLiveData.State.Empty -> {
 
 
-                    if (listData.value!!.isNullOrEmpty()){
-                        if (isForceContent){
+                    if (listData.value!!.isNullOrEmpty()) {
+                        if (isForceContent) {
                             stateLayout?.showContent()
-                        }else{
+                        } else {
                             stateLayout?.showEmpty()
                         }
 
-                    }
-                    else {
+                    } else {
                         stateLayout?.postDelayed({
                             stateLayout.showContent()
                         }, delay)
                     }
                 }
+
                 StateLiveData.State.Error -> {
                     success = false
                     if (listData.value!!.isNullOrEmpty()) {
@@ -93,6 +94,7 @@ abstract class PageListVM<T> : ViewModel(),
 
                     }
                 }
+
                 else -> {
                     stateLayout?.postDelayed({
                         stateLayout.showContent()
@@ -189,8 +191,8 @@ abstract class PageListVM<T> : ViewModel(),
 
     open fun processData(data: List<T>?, nullIsEmpty: Boolean = false) {
         firstLoad = false
+        if (page == startPage) listData.value!!.clear()
         if (data != null) {
-            if (page == startPage) listData.value!!.clear()
             val list = listData.value
             updateOldData()
             if (data.isNotEmpty()) {
