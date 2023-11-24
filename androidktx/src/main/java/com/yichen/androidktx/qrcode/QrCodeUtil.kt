@@ -28,9 +28,14 @@ object QrCodeUtil {
     /**
      * 开启二维码扫描界面
      */
-    fun start(source: Any, reqCode: Int = 1, color: Int? = null, launcher: ActivityResultLauncher<Intent>) {
+    fun start(
+        source: Any,
+        reqCode: Int = 1,
+        color: Int? = null,
+        launcher: ActivityResultLauncher<Intent>
+    ) {
         requestCode = reqCode
-        PermissionExt.applyOnlyCameraPermission(PermissionExt.getContext(source)){
+        PermissionExt.applyOnlyCameraPermission(PermissionExt.getContext(source)) {
             if (source is AppCompatActivity) {
                 val intent = Intent(source, QrCodeActivity::class.java)
                 if (color != null) intent.putExtra("color", color)
@@ -53,13 +58,14 @@ object QrCodeUtil {
         content: String,
         size: Int = ConvertUtils.dp2px(200f),
         logo: Bitmap? = null,
+        foregroundColor: Int = Color.BLACK,
         onFinish: ((Bitmap) -> Unit)
     ) {
         ThreadUtils.getIoPool().execute {
             val bitmap = if (logo != null) {
-                QRCodeEncoder.syncEncodeQRCode(content, size, Color.BLACK, logo)
+                QRCodeEncoder.syncEncodeQRCode(content, size, foregroundColor, logo)
             } else {
-                QRCodeEncoder.syncEncodeQRCode(content, size)
+                QRCodeEncoder.syncEncodeQRCode(content, size, foregroundColor)
             }
             ViewUtils.runOnUiThread {
                 onFinish(bitmap)
