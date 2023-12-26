@@ -189,30 +189,33 @@ abstract class PageListVM<T> : ViewModel(),
 
     abstract fun load()
 
-    open fun processData(data: List<T>?, nullIsEmpty: Boolean = false) {
+    open fun processData(originList: List<T>?, nullIsEmpty: Boolean = false) {
         firstLoad = false
         if (page == startPage) listData.value!!.clear()
-        if (data != null) {
-            val list = listData.value
+        if (originList != null) {
+            val vmValue = listData.value
             updateOldData()
-            if (data.isNotEmpty()) {
+            if (originList.isNotEmpty()) {
                 hasMore = true
-                list?.addAll(data)
-                listData.postValueAndSuccess(list!!)
+                vmValue?.addAll(originList)
+                listData.postValueAndSuccess(vmValue!!)
             } else {
                 //listWrapper数据为空
                 hasMore = false
-                if (list!!.isEmpty()) listData.postEmpty(list)
-                else listData.postValueAndSuccess(list)
+                if (vmValue!!.isEmpty()) listData.postEmpty(vmValue)
+                else listData.postValueAndSuccess(vmValue)
             }
         } else {
-            val list = listData.value
+            val vmValue = listData.value
             updateOldData()
-            if (list.isNullOrEmpty()) {
-                if (nullIsEmpty) listData.postEmpty(list)
+
+            if (vmValue.isNullOrEmpty()) {//第一页
+                if (nullIsEmpty) listData.postEmpty(vmValue)
                 else listData.postError()
             } else {
-                listData.postError()
+                hasMore = false
+                listData.postValueAndSuccess(vmValue)
+                //listData.postError()
             }
         }
     }
