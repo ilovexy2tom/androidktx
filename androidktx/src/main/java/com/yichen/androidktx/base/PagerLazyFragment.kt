@@ -16,7 +16,11 @@ abstract class PagerLazyFragment : Fragment(), FragmentUtils.OnBackClickListener
     protected var cacheView: View? = null
     protected var isInit = false
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         if (cacheView == null) cacheView = inflater.inflate(getLayoutId(), container, false)
         return cacheView!!
     }
@@ -27,7 +31,7 @@ abstract class PagerLazyFragment : Fragment(), FragmentUtils.OnBackClickListener
     }
 
     private fun lazyInit() {
-        if (cacheView!=null && userVisibleHint && !isInit ) {
+        if (cacheView != null && userVisibleHint && !isInit) {
             initView()
             initData()
             isInit = true
@@ -37,8 +41,8 @@ abstract class PagerLazyFragment : Fragment(), FragmentUtils.OnBackClickListener
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {
         super.setUserVisibleHint(isVisibleToUser)
         lazyInit()
-        if(isInit){
-            if(isVisibleToUser) onShow() else onHide()
+        if (isInit) {
+            if (isVisibleToUser) onShow() else onHide()
         }
     }
 
@@ -46,8 +50,8 @@ abstract class PagerLazyFragment : Fragment(), FragmentUtils.OnBackClickListener
     protected abstract fun getLayoutId(): Int
     abstract fun initView()
     abstract fun initData()
-    open fun onShow(){}
-    open fun onHide(){}
+    open fun onShow() {}
+    open fun onHide() {}
 
     override fun onBackClick() = false
 }
