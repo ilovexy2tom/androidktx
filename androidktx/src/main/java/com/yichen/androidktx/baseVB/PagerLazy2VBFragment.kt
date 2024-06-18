@@ -49,7 +49,6 @@ abstract class PagerLazy2VBFragment <VB: ViewBinding> : BindingFragment<VB>(), F
     }
 
     //执行初始化，只会执行一次
-    protected abstract fun getLayoutId(): Int
     abstract fun initView()
     abstract fun initData()
     open fun onShow() {}
