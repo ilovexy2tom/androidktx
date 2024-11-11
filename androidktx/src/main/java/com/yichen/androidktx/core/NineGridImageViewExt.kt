@@ -3,10 +3,10 @@ package com.yichen.androidktx.core
 import android.content.Context
 import android.graphics.Color
 import android.widget.ImageView
-import com.jaeger.ninegridimageview.NineGridImageView
-import com.jaeger.ninegridimageview.NineGridImageViewAdapter
 import com.lxj.xpopup.XPopup
 import com.lxj.xpopup.util.SmartGlideImageLoader
+import com.yichen.androidktx.widget.ninegridimageview.NineGridImageView
+import com.yichen.androidktx.widget.ninegridimageview.NineGridImageViewAdapter
 
 /**
  * 绑定数据
