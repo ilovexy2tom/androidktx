@@ -112,7 +112,7 @@ dependencies {
 
 
     api 'com.blankj:utilcodex:1.31.1' //Utils
-    api 'io.github.jeremyliao:live-event-bus-x:1.8.0'    //liveBus
+    api 'com.github.michaellee123:LiveEventBus:1.8.14'        //liveBus
     api 'com.github.getActivity:XXPermissions:18.3' //permission
 
 
