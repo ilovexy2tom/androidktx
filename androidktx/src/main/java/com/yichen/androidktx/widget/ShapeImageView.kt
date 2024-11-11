@@ -95,11 +95,9 @@ class ShapeImageView @JvmOverloads constructor(context: Context, attributeSet: A
         }
     }
 
-    override fun onDraw(canvas: Canvas?) {
+    override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            canvas!!.drawRoundRect(0f,0f, measuredWidth.toFloat(), measuredHeight.toFloat(), mCorner.toFloat(),mCorner.toFloat(), strokePaint)
-        }
+        canvas.drawRoundRect(0f,0f, measuredWidth.toFloat(), measuredHeight.toFloat(), mCorner.toFloat(),mCorner.toFloat(), strokePaint)
     }
 
     fun setup(solid: Int = mSolid, stroke: Int = mStroke, strokeWidth: Int = mStrokeWidth,

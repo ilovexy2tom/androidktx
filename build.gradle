@@ -3,9 +3,9 @@
 buildscript {
     ext{
         kotlin_version = '1.7.10'
-        CompileSdkVersion = 32
+        CompileSdkVersion = 34
         MinSdkVersion = 21
-        TargetSdkVersion = 32
+        TargetSdkVersion = 34
         VersionCode = 1
         VersionName = "1.0.0"
     }
